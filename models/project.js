@@ -8,7 +8,8 @@ const ProjectSchema = new Schema({
     projectDate: {
         type: String,
         default: Date.now()
-    }
+    },
+    projectTickets: [{ type: Schema.Types.ObjectId, ref: 'Ticket' }]
 })
 
 //Model

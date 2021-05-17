@@ -31,7 +31,7 @@ function Projects() {
         };
         console.log('name: ', payload)
         axios({
-            url: 'api/save',
+            url: 'api/saveProject',
             method: 'POST',
             data: payload
         })
