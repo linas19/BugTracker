@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
-import useAxios from 'axios-hooks'
+import useAxios from 'axios-hooks';
 
 const axios = require('axios');
+const projectState = {
 
+    projectName: '',
+    projectDescription: '',
+    projectAuthor: '',
+    projectDate: ''
+
+}
 function Projects() {
-    const [title, setTitle] = useState();
-    const [body, setBody] = useState();
+    const [state, setState] = useState(projectState);
     const resetUserInputs = () => {
-        setTitle('')
-        setBody('')
+        setState(projectState)
     }
     const [{ data, loading, error }, refetch] = useAxios(
         '/api'
@@ -19,9 +24,12 @@ function Projects() {
     const submit = (e) => {
         e.preventDefault();
         const payload = {
-            title: title,
-            body: body
+            projectName: state.projectName,
+            projectDescription: state.projectDescription,
+            projectAuthor: state.projectAuthor,
+            projectDate: state.projectDate
         };
+        console.log('name: ', payload)
         axios({
             url: 'api/save',
             method: 'POST',
@@ -43,19 +51,26 @@ function Projects() {
                 <div>
                     <input
                         type='text'
-                        name='title'
-                        placeholder='Title'
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}>
+                        name='projectName'
+                        placeholder='Project Name'
+                        value={state.projectName}
+                        onChange={e => setState({ ...state, projectName: e.target.value })}>
+                    </input>
+                    <input
+                        type='text'
+                        name='projectAuthor'
+                        placeholder='Project Author'
+                        value={state.projectAuthor}
+                        onChange={e => setState({ ...state, projectAuthor: e.target.value })}>
                     </input>
                 </div>
                 <div>
-                    <textarea placeholder='body'
-                        name='body'
+                    <textarea placeholder='Project Description'
+                        name='projectDescription'
                         cols='30'
                         rows='10'
-                        value={body}
-                        onChange={(e) => setBody(e.target.value)}>
+                        value={state.projectDescription}
+                        onChange={e => setState({ ...state, projectDescription: e.target.value })}>
                     </textarea>
                 </div>
                 <button onClick={submit}>Create new project</button>
@@ -63,8 +78,10 @@ function Projects() {
             <div>
                 {data.length !== 0 && data.map((p, index) => (
                     <div key={index}>
-                        <h3>{p.title}</h3>
-                        <h3>{p.body}</h3>
+                        <h1>Project name: {p.projectName}</h1>
+                        <h3>Description: {p.projectDescription}</h3>
+                        <div>Project date: {p.projectDate}</div>
+                        <div>Project author: {p.projectAuthor}</div>
                     </div>
                 ))}
             </div>

@@ -18,6 +18,7 @@ router.post('/save', (req, res) => {
     const newProject = new Project(data);
     newProject.save((error) => {
         if (error) {
+            console.log(error)
             res.status(500).json({ msg: 'Sorry, internal server error' });
         } else {
             res.json({

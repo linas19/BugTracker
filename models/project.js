@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ProjectSchema = new Schema({
     projectName: String,
-    description: String,
-    date: {
+    projectDescription: String,
+    projectAuthor: String,
+    projectDate: {
         type: String,
         default: Date.now()
     }
