@@ -16,7 +16,7 @@ function Projects() {
         setState(projectState)
     }
     const [{ data, loading, error }, refetch] = useAxios(
-        '/api'
+        '/api/projects'
     )
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error!</p>
@@ -31,7 +31,7 @@ function Projects() {
         };
         console.log('name: ', payload)
         axios({
-            url: 'api/saveProject',
+            url: 'api/projects',
             method: 'POST',
             data: payload
         })

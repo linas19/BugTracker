@@ -18,7 +18,7 @@ function Tickets() {
         setState(ticketState)
     }
     const [{ data, loading, error }, refetch] = useAxios(
-        '/api'
+        '/api/tickets'
     )
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error!</p>
@@ -37,7 +37,7 @@ function Tickets() {
         };
         console.log('name: ', payload)
         axios({
-            url: 'api/saveTicket',
+            url: 'api/tickets',
             method: 'POST',
             data: payload
         })

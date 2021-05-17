@@ -3,25 +3,17 @@ const router = express.Router();
 const Project = require('../models/Project.js')
 const Ticket = require('../models/ticket.js')
 
-router.get('/', (req, res) => {
-    // Project.find({})
-    //     .then((data) => {
-    //         console.log('Project Data: ', data)
-    //         res.json(data)
-    //     })
-    //     .catch((error) => {
-    //         console.log('error', error)
-    //     })
-    Ticket.find({})
+router.get('/projects', (req, res) => {
+    Project.find({})
         .then((data) => {
-            console.log('Ticket Data: ', data)
+            console.log('Project Data: ', data)
             res.json(data)
         })
         .catch((error) => {
             console.log('error', error)
         })
 })
-router.post('/saveProject', (req, res) => {
+router.post('/projects', (req, res) => {
     console.log('BODY: ', req.body)
     const data = req.body;
     const newProject = new Project(data);
@@ -37,7 +29,7 @@ router.post('/saveProject', (req, res) => {
     })
 })
 
-router.get('/', (req, res) => {
+router.get('/tickets', (req, res) => {
     Ticket.find({})
         .then((data) => {
             console.log('Ticket Data: ', data)
@@ -47,7 +39,7 @@ router.get('/', (req, res) => {
             console.log('error', daerrorta)
         })
 })
-router.post('/saveTicket', (req, res) => {
+router.post('/tickets', (req, res) => {
     console.log('BODY: ', req.body)
     const data = req.body;
     const newTicket = new Ticket(data);
