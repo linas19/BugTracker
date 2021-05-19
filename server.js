@@ -8,17 +8,17 @@ const cors = require("cors");
 const PORT = process.env.PORT || 8080;
 const dbConfig = require('./config/db.config.js');
 const routes = require('./routes/api')
-require('./routes/auth.routes')(app);
-require('./routes/user.routes')(app);
+
 var corsOptions = {
     origin: "http://localhost:8081"
 };
 // parse requests of content-type - application/json
-app.use(bodyParser.json());
+app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(express.urlencoded({ extended: true }));
+require('./routes/auth.routes')(app);
+require('./routes/user.routes')(app);
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });
@@ -60,17 +60,17 @@ function initial() {
     Role.estimatedDocumentCount((err, count) => {
       if (!err && count === 0) {
         new Role({
-          name: "user"
+          name: "admin"
         }).save(err => {
           if (err) {
             console.log("error", err);
           }
   
-          console.log("added 'user' to roles collection");
+          console.log("added 'admin' to roles collection");
         });
   
         new Role({
-          name: "moderator"
+          name: "manager"
         }).save(err => {
           if (err) {
             console.log("error", err);
@@ -80,13 +80,13 @@ function initial() {
         });
   
         new Role({
-          name: "admin"
+          name: "developer"
         }).save(err => {
           if (err) {
             console.log("error", err);
           }
-  
-          console.log("added 'admin' to roles collection");
+
+          console.log("added 'developer' to roles collection");
         });
       }
     });

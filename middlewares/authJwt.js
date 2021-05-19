@@ -75,7 +75,7 @@ isModerator = (req, res, next) => {
           }
         }
 
-        res.status(403).send({ message: "Require Moderator Role!" });
+        res.status(403).send({ message: "Require Manager Role!" });
         return;
       }
     );

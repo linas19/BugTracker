@@ -7,15 +7,19 @@ import Home from '../Home/Home.js'
 import TopNavbar from '../../components/TopNavbar/TopNavbar.js'
 import LeftNavbar from '../../components/LeftNavbar/LeftNavbar.js'
 import styles from './index.module.scss'
-import React from "react";
+import React, { useState }from "react";
 import {
     BrowserRouter as Router,
     Switch,
     Route,
 } from "react-router-dom";
+import Login from '../../components/Login/Login.js'
 
 function Dashboard() {
-  
+    const [token, setToken] = useState();
+
+      return <Login setToken={setToken} />
+
     return (
         <Router>
             <div>

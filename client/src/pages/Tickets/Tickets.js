@@ -32,7 +32,6 @@ function Tickets() {
             ticketDate: state.ticketDate,
             ticketComment: state.ticketComment,
             ticketProject: state.ticketProject,
-            ticketAuthor: state.ticketAuthor,
             ticketSolver: state.ticketSolver
         };
         console.log('name: ', payload)
@@ -78,13 +77,6 @@ function Tickets() {
                             <option value="Additional Info Required">Additional Info Required</option>
                         </select>
                     </div>
-                    <input
-                        type='text'
-                        name='ticketAuthor'
-                        placeholder='ticket Author'
-                        value={state.ticketAuthor}
-                        onChange={e => setState({ ...state, ticketAuthor: e.target.value })}>
-                    </input>
                 </div>
                 <div>
                     <textarea placeholder='ticket Description'
@@ -102,7 +94,6 @@ function Tickets() {
                     <div key={index}>
                         <h1>ticket name: {p.ticketName}</h1>
                         <div>ticket date: {p.ticketDate}</div>
-                        <div>ticket author: {p.ticketAuthor}</div>
                     </div>
                 ))}
             </div>
