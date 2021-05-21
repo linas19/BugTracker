@@ -3,8 +3,11 @@ const db = require("../models");
 const User = db.user;
 const Role = db.role;
 
+
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+
+
 
 exports.signup = (req, res) => {
   const user = new User({
@@ -63,7 +66,7 @@ exports.signup = (req, res) => {
 };
 
 exports.signin = (req, res) => {
-  console.log("req body: ",req.body)
+  console.log("req body singning in: ", req.body)
   User.findOne({
     username: req.body.username
   })

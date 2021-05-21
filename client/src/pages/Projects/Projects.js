@@ -1,25 +1,39 @@
-import React, { useState } from 'react';
-import useAxios from 'axios-hooks';
+import React, { useState, useEffect } from 'react';
 
 const axios = require('axios');
 const projectState = {
-
     projectName: '',
     projectDescription: '',
     projectAuthor: '',
     projectDate: ''
-
 }
 function Projects() {
     const [state, setState] = useState(projectState);
     const resetUserInputs = () => {
         setState(projectState)
     }
-    const [{ data, loading, error }, refetch] = useAxios(
-        '/api/projects'
-    )
-    if (loading) return <p>Loading...</p>
-    if (error) return <p>Error!</p>
+    const [project, setProject] = useState('')
+    // const data = {}
+    useEffect(() => fetchProjects(),[])
+    const fetchProjects = () => {
+        axios({
+            url: '/api/auth/projects',
+            method: 'GET',
+            headers: {
+                ["x-access-token"]: localStorage.getItem('x-access-token')
+            }
+        })
+            .then((response) => {
+                console.log('Projects:', response.data)
+                setProject(response.data)
+
+            })
+            .catch((error) => {
+                console.log(error, 'Not logged in to get projects')
+            })
+
+    }
+
 
     const submit = (e) => {
         e.preventDefault();
@@ -31,17 +45,19 @@ function Projects() {
         };
         console.log('name: ', payload)
         axios({
-            url: 'api/projects',
+            url: '/api/auth/projects',
             method: 'POST',
-            data: payload
+            data: payload,
+            headers: {
+                ["x-access-token"]: localStorage.getItem('x-access-token')
+            }
         })
             .then(() => {
-                console.log('Data has been sent')
+                console.log('Project data has been sent')
                 resetUserInputs()
-                refetch()
             })
             .catch(() => {
-                console.log('Data not sent')
+                console.log('Project data not sent')
             })
     }
     return (
@@ -76,7 +92,7 @@ function Projects() {
                 <button onClick={submit}>Create new project</button>
             </form>
             <div>
-                {data.length !== 0 && data.map((p, index) => (
+                {project.length !== 0 && project.map((p, index) => (
                     <div key={index}>
                         <h1>Project name: {p.projectName}</h1>
                         <h3>Description: {p.projectDescription}</h3>

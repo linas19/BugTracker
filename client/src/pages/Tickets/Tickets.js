@@ -41,12 +41,12 @@ function Tickets() {
             data: payload
         })
             .then(() => {
-                console.log('Data has been sent')
+                console.log('Ticket data has been sent')
                 resetUserInputs()
                 refetch()
             })
             .catch(() => {
-                console.log('Data not sent')
+                console.log('Ticket data not sent')
             })
     }
     return (

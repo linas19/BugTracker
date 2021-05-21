@@ -1,9 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
-const path = require('path');
 const app = express();
-const bodyParser = require("body-parser");
 const cors = require("cors");
 const PORT = process.env.PORT || 8080;
 const dbConfig = require('./config/db.config.js');
@@ -12,6 +10,8 @@ const routes = require('./routes/api')
 var corsOptions = {
     origin: "http://localhost:8081"
 };
+app.use(cors(corsOptions));
+
 // parse requests of content-type - application/json
 app.use(express.json());
 
@@ -19,6 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
+require('./routes/project.routes')(app);
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });
@@ -56,21 +57,26 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('tiny'));
 app.use('/api', routes)
+app.get('/jwt', (req, res) => {
+  const token = jsonwebtoken.sign({ user: 'johndoe' }, jwtSecret);
+  res.cookie('token', token, { httpOnly: true });
+  res.json({ token });
+});
 function initial() {
     Role.estimatedDocumentCount((err, count) => {
       if (!err && count === 0) {
         new Role({
-          name: "admin"
+          name: "user"
         }).save(err => {
           if (err) {
             console.log("error", err);
           }
   
-          console.log("added 'admin' to roles collection");
+          console.log("added 'user' to roles collection");
         });
   
         new Role({
-          name: "manager"
+          name: "moderator"
         }).save(err => {
           if (err) {
             console.log("error", err);
@@ -80,13 +86,13 @@ function initial() {
         });
   
         new Role({
-          name: "developer"
+          name: "admin"
         }).save(err => {
           if (err) {
             console.log("error", err);
           }
-
-          console.log("added 'developer' to roles collection");
+  
+          console.log("added 'admin' to roles collection");
         });
       }
     });

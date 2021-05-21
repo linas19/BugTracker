@@ -6,7 +6,7 @@ const Role = db.role;
 
 verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
-
+  console.log('token ver:',token)
   if (!token) {
     return res.status(403).send({ message: "No token provided!" });
   }
@@ -67,7 +67,7 @@ isModerator = (req, res, next) => {
           res.status(500).send({ message: err });
           return;
         }
-
+        console.log('roles: ',roles)
         for (let i = 0; i < roles.length; i++) {
           if (roles[i].name === "moderator") {
             next();

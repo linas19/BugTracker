@@ -7,18 +7,32 @@ import Home from '../Home/Home.js'
 import TopNavbar from '../../components/TopNavbar/TopNavbar.js'
 import LeftNavbar from '../../components/LeftNavbar/LeftNavbar.js'
 import styles from './index.module.scss'
-import React, { useState }from "react";
+import React, { useState } from "react";
 import {
     BrowserRouter as Router,
     Switch,
     Route,
 } from "react-router-dom";
 import Login from '../../components/Login/Login.js'
+const axios = require('axios');
 
-function Dashboard() {
-    const [token, setToken] = useState();
-
-      return <Login setToken={setToken} />
+export default function Dashboard() {
+    if (!localStorage.getItem('x-access-token')) {
+        return <Login />
+    }
+    axios({
+        url: 'api/currentUser',
+        method: 'GET',
+        headers: {
+            ["x-access-token"]: localStorage.getItem('x-access-token')
+        }
+    })
+        .then((response) => {
+            console.log(response.data, 'Logged in')
+        })
+        .catch((error) => {
+            console.log(error, 'Not logged in')
+        })
 
     return (
         <Router>
@@ -52,4 +66,3 @@ function Dashboard() {
     )
 }
 
-export default Dashboard

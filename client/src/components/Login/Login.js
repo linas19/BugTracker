@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import useAxios from 'axios-hooks';
+import PropTypes from 'prop-types';
+
 
 const axios = require('axios');
 const userState = {
@@ -12,7 +13,7 @@ const loginStateFull = {
     user: '',
     password: '',
 }
-function Login() {
+export default function Login() {
     const [state, setState] = useState(userState);
     const resetUserInputs = () => {
         setState(userState)
@@ -22,11 +23,6 @@ function Login() {
     const resetLoginInputs = () => {
         setLoginState(loginStateFull)
     }
-    // const [{ data, loading, error }, refetch] = useAxios(
-    //     '/api/projects'
-    // )
-    // if (loading) return <p>Loading...</p>
-    // if (error) return <p>Error!</p>
     const submitLogin = (e) => {
         e.preventDefault();
         const payload = {
@@ -37,19 +33,21 @@ function Login() {
         axios({
             url: 'api/auth/signin',
             method: 'POST',
-            data: payload
+            data: payload,
         })
-            .then(() => {
-                console.log('Data has been sent')
+            .then((response) => {
+                console.log(response.data.accessToken, 'Logged in')
+                localStorage.setItem('x-access-token', response.data.accessToken)
                 setIsLoggedIn(true)
                 resetLoginInputs()
-                // refetch()
+                window.location.reload(true);
             })
-            .catch(() => {
-                console.log('Data not sent')
+            .catch((error) => {
+                console.log(error, 'Not logged in')
                 setIsLoggedIn(false)
             })
     }
+
     const submit = (e) => {
         e.preventDefault();
         const payload = {
@@ -65,12 +63,12 @@ function Login() {
             data: payload
         })
             .then(() => {
-                console.log('Data has been sent')
+                console.log('Signed up')
                 resetUserInputs()
                 // refetch()
             })
             .catch(() => {
-                console.log('Data not sent')
+                console.log('Sign up failed')
             })
     }
     return (
@@ -129,4 +127,6 @@ function Login() {
     )
 }
 
-export default Login
+Login.propTypes = {
+    setToken: PropTypes.func.isRequired
+}
