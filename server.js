@@ -20,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
 require('./routes/project.routes')(app);
+require('./routes/ticket.routes')(app);
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });

@@ -55,6 +55,7 @@ function Projects() {
             .then(() => {
                 console.log('Project data has been sent')
                 resetUserInputs()
+                fetchProjects()
             })
             .catch(() => {
                 console.log('Project data not sent')

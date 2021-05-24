@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import useAxios from 'axios-hooks';
+import React, { useState, useEffect } from 'react';
 
 const axios = require('axios');
 const ticketState = {
@@ -17,12 +16,26 @@ function Tickets() {
     const resetUserInputs = () => {
         setState(ticketState)
     }
-    const [{ data, loading, error }, refetch] = useAxios(
-        '/api/tickets'
-    )
-    if (loading) return <p>Loading...</p>
-    if (error) return <p>Error!</p>
+    const [ticket, setTicket] = useState('')
 
+    useEffect(() => fetchTickets(),[])
+    const fetchTickets = () => {
+        axios({
+            url: '/api/auth/tickets',
+            method: 'GET',
+            headers: {
+                ["x-access-token"]: localStorage.getItem('x-access-token')
+            }
+        })
+            .then((response) => {
+                console.log('Tickets:', response.data)
+                setTicket(response.data)
+            })
+            .catch((error) => {
+                console.log(error, 'Not logged in to get tickets')
+            })
+
+    }
     const submit = (e) => {
         e.preventDefault();
         const payload = {
@@ -36,14 +49,18 @@ function Tickets() {
         };
         console.log('name: ', payload)
         axios({
-            url: 'api/tickets',
+            url: '/api/auth/tickets',
             method: 'POST',
-            data: payload
+            data: payload,
+            headers: {
+                ["x-access-token"]: localStorage.getItem('x-access-token')
+            }
         })
             .then(() => {
                 console.log('Ticket data has been sent')
-                resetUserInputs()
-                refetch()
+                resetUserInputs();
+                fetchTickets();
+                window.location.reload(true);
             })
             .catch(() => {
                 console.log('Ticket data not sent')
@@ -90,7 +107,7 @@ function Tickets() {
                 <button onClick={submit}>Create new ticket</button>
             </form>
             <div>
-                {data.length !== 0 && data.map((p, index) => (
+                {ticket.length !== 0 && ticket.map((p, index) => (
                     <div key={index}>
                         <h1>ticket name: {p.ticketName}</h1>
                         <div>ticket date: {p.ticketDate}</div>

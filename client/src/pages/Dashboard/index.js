@@ -13,13 +13,22 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
-import Login from '../../components/Login/Login.js'
+import Login from '../../components/Login/Login.js';
+var jwt = require('jsonwebtoken');
 const axios = require('axios');
 
 export default function Dashboard() {
-    if (!localStorage.getItem('x-access-token')) {
+    const token = localStorage.getItem('x-access-token');
+    const decoded = jwt.decode(token)
+    if (!token) {
         return <Login />
     }
+    console.log('date: ',Date.now())
+    console.log('token exp:', decoded.exp)
+    if (Date.now() > decoded.exp * 1000) {
+        return <Login />
+      }
+      console.log('checking jwt exp')
     axios({
         url: 'api/currentUser',
         method: 'GET',
