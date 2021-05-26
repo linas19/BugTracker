@@ -23,12 +23,10 @@ export default function Dashboard() {
     if (!token) {
         return <Login />
     }
-    console.log('date: ',Date.now())
-    console.log('token exp:', decoded.exp)
+
     if (Date.now() > decoded.exp * 1000) {
         return <Login />
       }
-      console.log('checking jwt exp')
     axios({
         url: 'api/currentUser',
         method: 'GET',

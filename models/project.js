@@ -10,6 +10,10 @@ const Project = mongoose.model(
             type: String,
             default: Date.now()
         },
+        user: {
+            type: mongoose.Schema.ObjectId, 
+            ref: 'User'
+        }
     })
 )
 //Model

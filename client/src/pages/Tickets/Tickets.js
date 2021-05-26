@@ -28,7 +28,6 @@ function Tickets() {
             }
         })
             .then((response) => {
-                console.log('Tickets:', response.data)
                 setTicket(response.data)
             })
             .catch((error) => {
@@ -47,7 +46,6 @@ function Tickets() {
             ticketProject: state.ticketProject,
             ticketSolver: state.ticketSolver
         };
-        console.log('name: ', payload)
         axios({
             url: '/api/auth/tickets',
             method: 'POST',
@@ -57,7 +55,6 @@ function Tickets() {
             }
         })
             .then(() => {
-                console.log('Ticket data has been sent')
                 resetUserInputs();
                 fetchTickets();
                 window.location.reload(true);

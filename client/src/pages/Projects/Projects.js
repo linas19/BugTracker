@@ -24,7 +24,6 @@ function Projects() {
             }
         })
             .then((response) => {
-                console.log('Projects:', response.data)
                 setProject(response.data)
 
             })
@@ -43,7 +42,6 @@ function Projects() {
             projectAuthor: state.projectAuthor,
             projectDate: state.projectDate
         };
-        console.log('name: ', payload)
         axios({
             url: '/api/auth/projects',
             method: 'POST',
@@ -53,7 +51,6 @@ function Projects() {
             }
         })
             .then(() => {
-                console.log('Project data has been sent')
                 resetUserInputs()
                 fetchProjects()
             })
