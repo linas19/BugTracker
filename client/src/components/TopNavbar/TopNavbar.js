@@ -12,7 +12,6 @@ function TopNavbar() {
         }
     })
         .then((response) => {
-            console.log(response.data.username, 'Logged in')
             setUsername(response.data.username)
         })
         .catch((error) => {

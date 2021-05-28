@@ -13,7 +13,6 @@ function Projects() {
         setState(projectState)
     }
     const [project, setProject] = useState('')
-    // const data = {}
     useEffect(() => fetchProjects(),[])
     const fetchProjects = () => {
         axios({
@@ -25,15 +24,11 @@ function Projects() {
         })
             .then((response) => {
                 setProject(response.data)
-
             })
             .catch((error) => {
                 console.log(error, 'Not logged in to get projects')
             })
-
     }
-
-
     const submit = (e) => {
         e.preventDefault();
         const payload = {

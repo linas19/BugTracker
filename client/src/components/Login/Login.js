@@ -29,14 +29,12 @@ export default function Login() {
             username: loginState.username,
             password: loginState.password,
         };
-        console.log('login: ', payload)
         axios({
             url: 'api/auth/signin',
             method: 'POST',
             data: payload,
         })
             .then((response) => {
-                console.log(response.data.accessToken, 'Logged in')
                 localStorage.setItem('x-access-token', response.data.accessToken)
                 setIsLoggedIn(true)
                 resetLoginInputs()
@@ -56,14 +54,12 @@ export default function Login() {
             password: state.password,
             roles: state.roles,
         };
-        console.log('name: ', payload)
         axios({
             url: 'api/auth/signup',
             method: 'POST',
             data: payload
         })
             .then(() => {
-                console.log('Signed up')
                 resetUserInputs()
                 // refetch()
             })

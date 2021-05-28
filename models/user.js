@@ -14,10 +14,16 @@ const User = mongoose.model(
     ],
     projects: [
       {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Project'
-    }
-  ]
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Project'
+      }
+    ],
+    tickets: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tickets'
+      }
+    ]
   })
 );
 

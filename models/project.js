@@ -10,8 +10,8 @@ const Project = mongoose.model(
             type: String,
             default: Date.now()
         },
-        user: {
-            type: mongoose.Schema.ObjectId, 
+        projectUser: {
+            type: mongoose.Schema.Types.ObjectId, 
             ref: 'User'
         }
     })

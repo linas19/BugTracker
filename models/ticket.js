@@ -5,7 +5,10 @@ const Ticket = mongoose.model(
     new mongoose.Schema({
         ticketName: { type: String, required: true, unique: true },
         ticketProject: String,
-        // ticketAuthor: { type: Schema.Types.ObjectId, ref: 'Project' },
+        ticketAuthor: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
         ticketSolver: String,
         ticketPriority: String,
         ticketType: String,
@@ -14,7 +17,11 @@ const Ticket = mongoose.model(
             type: String,
             default: Date.now()
         },
-        ticketComment: Array
+        ticketComment: Array,
+        ticketProject: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Project'
+        }
     })
 )
 //Model
