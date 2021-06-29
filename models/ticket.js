@@ -4,7 +4,6 @@ const Ticket = mongoose.model(
     "Ticket",
     new mongoose.Schema({
         ticketName: { type: String, required: true, unique: true },
-        ticketProject: String,
         ticketAuthor: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'

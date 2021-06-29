@@ -16,7 +16,7 @@ function Tickets() {
     const resetUserInputs = () => {
         setState(ticketState)
     }
-    const [ticket, setTicket] = useState('')
+    const [ticket, setTicket] = useState([])
 
     useEffect(() => fetchTickets(), [])
     const fetchTickets = () => {
@@ -28,7 +28,7 @@ function Tickets() {
             }
         })
             .then((response) => {
-                console.log('response:',response.data)
+                console.log('response:', response.data)
                 setTicket(response.data)
             })
             .catch((error) => {
@@ -85,12 +85,22 @@ function Tickets() {
                 console.log('Ticket data not sent')
             })
     }
+    const projectTickets = ticket.reduce((accumulator, current, index) => {
+        if (accumulator[current.ticketProject]) {
+            accumulator[current.ticketProject].push(current);
+            return accumulator
+        }
+        return {
+            ...accumulator,
+            [current.ticketProject]: [current],
+        }
+    }, {});
     return (
         <div>
             <h1>Tickets</h1>
             <div>Select a project to create a ticket: </div>
             <select placeholder="Select a project" onChange={e => {
-                console.log('sd',e.target.value)
+                console.log('sd', e.target.value)
                 setState({ ...state, ticketProject: e.target.value })
             }} value={state.ticketProject}>
                 {project.length !== 0 && project.map((p, index) => (
@@ -133,7 +143,17 @@ function Tickets() {
                 </div>
                 <button onClick={submit}>Create new ticket</button>
             </form>
-            <div className={styles.ticketContainer}>
+            <div className={styles.projectList}>
+                {Object.keys(projectTickets).map((ticketProject) => (
+                    <div className={styles.ticket}>
+                        {projectTickets[ticketProject].map((ticket) => (
+                            <div>{ticket.ticketName}</div>
+                        ))}
+                    </div>
+                ))}
+            </div>
+
+            {/* <div className={styles.ticketContainer}>
                 {ticket.length !== 0 && ticket.map((p, index) => (
                     <div className={styles.ticket} key={index}>
                         <div>Ticket project: {p.ticketProject}</div>
@@ -141,7 +161,7 @@ function Tickets() {
                         <div>Ticket date: {p.ticketDate}</div>
                     </div>
                 ))}
-            </div>
+            </div> */}
         </div>
     )
 }
