@@ -31,7 +31,6 @@ exports.newTicket = (req, res) => {
     })
 }
 exports.showTickets = (req, res) => {
-    // console.log('result show', res)
     console.log('reqQQ:', req.params)
     let token = req.headers["x-access-token"]
     const decoded = jwt.verify(token, config.secret)

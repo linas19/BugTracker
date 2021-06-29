@@ -85,7 +85,6 @@ function Tickets() {
                 console.log('Ticket data not sent')
             })
     }
-    console.log('pppproject:',project)
     return (
         <div>
             <h1>Tickets</h1>
