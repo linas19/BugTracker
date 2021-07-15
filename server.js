@@ -23,7 +23,7 @@ require('./routes/project.routes')(app);
 require('./routes/ticket.routes')(app);
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  res.json({ message: "Welcome to Bugtracker application." });
 });
 const db = require("./models");
 const Role = db.role;
