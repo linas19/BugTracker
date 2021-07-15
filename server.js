@@ -25,13 +25,7 @@ require('./routes/ticket.routes')(app);
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Bugtracker 2 application." });
 });
-app_path ='../www';
 
-app.use('/api', songRoute)
-
-app.use('/',express.static(path.join(__dirname,app_path)))
-
-app.get('*',(req,res)=>res.sendFile(path.join(__dirname,app_path + '/index.html')))
 const db = require("./models");
 const Role = db.role;
 
