@@ -8,7 +8,7 @@ const dbConfig = require('./config/db.config.js');
 const routes = require('./routes/api')
 
 var corsOptions = {
-    origin: "http://localhost:8081"
+  origin: "http://localhost:8081"
 };
 app.use(cors(corsOptions));
 
@@ -23,13 +23,13 @@ require('./routes/project.routes')(app);
 require('./routes/ticket.routes')(app);
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to Bugtracker application." });
+  res.json({ message: "Welcome to Bugtracker 2 application." });
 });
 const db = require("./models");
 const Role = db.role;
 
 db.mongoose
-  .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+  .connect(process.env.MONGODB_URI || `mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -52,7 +52,7 @@ db.mongoose
 // });
 
 mongoose.connection.on('connected', () => {
-    console.log('Mongoose is connected');
+  console.log('Mongoose is connected');
 })
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -64,39 +64,42 @@ app.get('/jwt', (req, res) => {
   res.json({ token });
 });
 function initial() {
-    Role.estimatedDocumentCount((err, count) => {
-      if (!err && count === 0) {
-        new Role({
-          name: "user"
-        }).save(err => {
-          if (err) {
-            console.log("error", err);
-          }
-  
-          console.log("added 'user' to roles collection");
-        });
-  
-        new Role({
-          name: "moderator"
-        }).save(err => {
-          if (err) {
-            console.log("error", err);
-          }
-  
-          console.log("added 'moderator' to roles collection");
-        });
-  
-        new Role({
-          name: "admin"
-        }).save(err => {
-          if (err) {
-            console.log("error", err);
-          }
-  
-          console.log("added 'admin' to roles collection");
-        });
-      }
-    });
-  }
+  Role.estimatedDocumentCount((err, count) => {
+    if (!err && count === 0) {
+      new Role({
+        name: "user"
+      }).save(err => {
+        if (err) {
+          console.log("error", err);
+        }
+
+        console.log("added 'user' to roles collection");
+      });
+
+      new Role({
+        name: "moderator"
+      }).save(err => {
+        if (err) {
+          console.log("error", err);
+        }
+
+        console.log("added 'moderator' to roles collection");
+      });
+
+      new Role({
+        name: "admin"
+      }).save(err => {
+        if (err) {
+          console.log("error", err);
+        }
+
+        console.log("added 'admin' to roles collection");
+      });
+    }
+  });
+}
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(''))
+}
 app.listen(PORT, console.log(`server is startting at: ${PORT}`))
 
