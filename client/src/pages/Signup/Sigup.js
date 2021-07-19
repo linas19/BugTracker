@@ -190,7 +190,7 @@ export default function Signup() {
                             </IconButton>
                         }
                     >
-                        Signed up successfully
+                        Signed up successfully, we have sent a link to your e-mail to verify signup.
                     </Alert>
                 </Collapse>
             )

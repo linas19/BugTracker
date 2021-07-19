@@ -25,7 +25,7 @@ exports.newTicket = (req, res) => {
                 }
             })
             res.json({
-                msg: 'Your ticket data was saved!!!HAHA'
+                msg: 'Your ticket data was saved!!!'
             })
         }
     })

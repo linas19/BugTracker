@@ -42,15 +42,6 @@ db.mongoose
     console.error("Connection error", err);
     process.exit();
   });
-// const MONGODB_URI = 'mongodb+srv://linas19:kaledos@bugtrackerdb.6gp90.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-// mongoose.connect('mongodb://localhost/mern_youtube', {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// });
-// mongoose.connect(MONGODB_URI || 'mongodb://localhost/mern_youtube', {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// });
 
 mongoose.connection.on('connected', () => {
   console.log('Mongoose is connected');

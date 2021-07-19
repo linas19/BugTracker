@@ -2,22 +2,12 @@ import React, { useState } from 'react';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 
-import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Signup from '../Signup/Sigup'
 import Signin from '../Signin/Signin'
-import PasswordReminder from '../ChangePassword/ChangePassword'
-
+import ChangePassword from '../ChangePassword/ChangePassword'
 import Grid from '@material-ui/core/Grid';
 
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    Redirect
-} from "react-router-dom";
-import ChangePassword from '../ChangePassword/ChangePassword';
 export default function Login() {
     const [signin, setSignin] = useState(1)
     return (
@@ -28,13 +18,13 @@ export default function Login() {
                     <Grid container>
                         <Signin />
                         <Grid item xs>
-                            <Button variant="body2" onClick={() => {setSignin(3)}}>
-                                Forgot password?
+                            <Button color="primary" onClick={() => {setSignin(3)}}>
+                                Forgot password
                             </Button>
                         </Grid>
-                        <Grid item>
-                            <Button variant="body2" onClick={() => { setSignin(2) }}>
-                                Don't have an account? Sign up.
+                        <Grid item xs>
+                            <Button color="primary" onClick={() => { setSignin(2) }}>
+                                Sign up
                             </Button>
                         </Grid>
                     </Grid>
@@ -45,8 +35,8 @@ export default function Login() {
                     <Grid container>
                         <Signup />
                         <Grid item xs>
-                            <Button variant="body2" onClick={() => { setSignin(1) }}>
-                                Already have an account? Sign in.
+                            <Button color="primary" onClick={() => { setSignin(1) }}>
+                                Sign in
                             </Button>
                         </Grid>
                     </Grid>
@@ -57,12 +47,12 @@ export default function Login() {
                     <Grid container>
                         <ChangePassword />
                         <Grid item xs>
-                            <Button size="small" variant="body2" onClick={() => { setSignin(1) }}>
+                            <Button color="primary" onClick={() => { setSignin(1) }}>
                                 Sign in
                             </Button>
                         </Grid>
                         <Grid item xs>
-                            <Button size="small" variant="body2" onClick={() => { setSignin(2) }}>
+                            <Button color="primary" onClick={() => { setSignin(2) }}>
                                 Sign up
                             </Button>
                         </Grid>
