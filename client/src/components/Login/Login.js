@@ -12,6 +12,14 @@ import Grid from '@material-ui/core/Grid';
 import AssignmentTurnedInTwoToneIcon from '@material-ui/icons/AssignmentTurnedInTwoTone';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import Alert from '@material-ui/lab/Alert';
+import Collapse from '@material-ui/core/Collapse';
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
+
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -51,6 +59,7 @@ export default function Login() {
     }
     const [loginState, setLoginState] = useState(loginStateFull)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [signupSuccess, setsignupSuccess] = useState()
     const resetLoginInputs = () => {
         setLoginState(loginStateFull)
     }
@@ -92,13 +101,16 @@ export default function Login() {
         })
             .then(() => {
                 resetUserInputs()
+                setsignupSuccess(true)
                 // refetch()
             })
             .catch(() => {
+                setsignupSuccess(false)
                 console.log('Sign up failed')
             })
     }
     const classes = useStyles();
+    const [openSignupAlert, setOpenSignupAlert] = React.useState(true);
 
     return (
 
@@ -129,18 +141,21 @@ export default function Login() {
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="standard-basic"
-                                label="Select a role"
-                                type='text'
+                            <Select
                                 variant="outlined"
-                                name='roles'
-                                placeholder='Roles'
+                                required
+                                // fullWidth
+                                labelId="demo-simple-select-label"
+                                id="standard-basic"
                                 value={state.roles}
                                 onChange={e => setState({ ...state, roles: [e.target.value] })}
-                            />
+                            >
+                                <MenuItem value="" disabled>
+                                    Select a role*
+                                </MenuItem>
+                                <MenuItem value="moderator">Moderator</MenuItem>
+                                <MenuItem value="user">User</MenuItem>
+                            </Select>
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
@@ -149,7 +164,7 @@ export default function Login() {
                                 label="Email Address"
                                 autoComplete="email"
                                 id="standard-basic"
-                                type='text'
+                                type='email'
                                 variant="outlined"
                                 name='email'
                                 placeholder='Email'
@@ -200,6 +215,48 @@ export default function Login() {
             </div>
             <Container maxWidth="sm" className={classes.signupContainer}>
             </Container>
+            {signupSuccess === true && (
+                <Collapse in={openSignupAlert}>
+                    <Alert
+                        action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    setOpenSignupAlert(false);
+                                }}
+                            >
+                                <CloseIcon fontSize="inherit" />
+                            </IconButton>
+                        }
+                    >
+                        Signed up successfully
+                    </Alert>
+                </Collapse>
+            )
+            }
+            {signupSuccess === false && (
+                <Collapse in={openSignupAlert}>
+                    <Alert severity="error"
+                        action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    setOpenSignupAlert(false);
+                                }}
+                            >
+                                <CloseIcon fontSize="inherit" />
+                            </IconButton>
+                        }
+                    >
+                        Signup failed, please check form or contact admin!
+                    </Alert>
+                </Collapse>
+            )
+            }
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
@@ -214,9 +271,9 @@ export default function Login() {
                         required
                         fullWidth
                         autoFocus
-                        id="standard-basic" 
-                        label="User Name" 
-                        type='text' 
+                        id="standard-basic"
+                        label="User Name"
+                        type='text'
                         variant="outlined"
                         name='userName'
                         placeholder='User Name'
@@ -269,7 +326,3 @@ export default function Login() {
         </Container>
     )
 }
-
-// Login.propTypes = {
-//     setToken: PropTypes.func.isRequired
-// }
