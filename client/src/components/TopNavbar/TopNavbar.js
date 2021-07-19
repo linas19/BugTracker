@@ -32,7 +32,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
-import Login from '../../components/Login/Login.js';
+// import Login from '../../pages/Login/Login.js';
 import DvrIcon from '@material-ui/icons/Dvr';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
@@ -139,8 +139,7 @@ function TopNavbar() {
 
     return (
         <div className={classes.root}>
-            <Router>
-
+            {/* <Router> */}
                 <CssBaseline />
                 <AppBar
                     position="fixed"
@@ -222,20 +221,13 @@ function TopNavbar() {
                                 <ListItemText primary='My profile' />
                             </ListItem>
                         </Link>
-                        {/* {['Dashboard', 'Manage roles', 'Manage users', 'Manage projects', 'Manage tickets', 'My profile'].map((text) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon><InboxIcon /></ListItemIcon>
-                                <ListItemText primary={text} />
-                                <Link to="/">Dashboard Home</Link>
-                            </ListItem>
-                        ))} */}
                     </List>
                 </Drawer>
                 <main className={classes.content}>
                     <div className={classes.toolbar} />
                     <div>
                         <div>
-                            <Switch>
+                            {/* <Switch>
                                 <Route path="/roles">
                                     <RoleAssignment />
                                 </Route>
@@ -254,26 +246,13 @@ function TopNavbar() {
                                 <Route path="/">
                                     <Home />
                                 </Route>
-                            </Switch>
+                            </Switch> */}
                         </div>
                     </div>
 
                 </main>
-            </Router>
+            {/* </Router> */}
         </div>
-        // <div className={classes.root}>
-        //     <AppBar position="static">
-        //         <Toolbar>
-        //             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-        //                 <MenuIcon />
-        //             </IconButton>
-        //             <Typography variant="h6" className={classes.title}>
-        //                 Welcome, {username}
-        //             </Typography>
-        //             <Button color="inherit" onClick={logout}>Logout</Button>
-        //         </Toolbar>
-        //     </AppBar>
-        // </div>
     )
 }
 

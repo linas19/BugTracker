@@ -19,8 +19,6 @@ import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 
-
-
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -48,44 +46,13 @@ const userState = {
     password: '',
     roles: [''],
 }
-const loginStateFull = {
-    user: '',
-    password: '',
-}
-export default function Login() {
+
+export default function Signup() {
     const [state, setState] = useState(userState);
     const resetUserInputs = () => {
         setState(userState)
     }
-    const [loginState, setLoginState] = useState(loginStateFull)
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [signupSuccess, setsignupSuccess] = useState()
-    const resetLoginInputs = () => {
-        setLoginState(loginStateFull)
-    }
-    const submitLogin = (e) => {
-        e.preventDefault();
-        const payload = {
-            username: loginState.username,
-            password: loginState.password,
-        };
-        axios({
-            url: 'api/auth/signin',
-            method: 'POST',
-            data: payload,
-        })
-            .then((response) => {
-                localStorage.setItem('x-access-token', response.data.accessToken)
-                setIsLoggedIn(true)
-                resetLoginInputs()
-                window.location.reload(true);
-            })
-            .catch((error) => {
-                console.log(error, 'Not logged in')
-                setIsLoggedIn(false)
-            })
-    }
-
     const submit = (e) => {
         e.preventDefault();
         const payload = {
@@ -113,7 +80,6 @@ export default function Login() {
     const [openSignupAlert, setOpenSignupAlert] = React.useState(true);
 
     return (
-
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
@@ -204,13 +170,6 @@ export default function Login() {
                     >
                         Sign Up
                     </Button>
-                    <Grid container justifyContent="flex-end">
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                Already have an account? Sign in
-                            </Link>
-                        </Grid>
-                    </Grid>
                 </form>
             </div>
             <Container maxWidth="sm" className={classes.signupContainer}>
@@ -257,72 +216,6 @@ export default function Login() {
                 </Collapse>
             )
             }
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign in
-                </Typography>
-                <form className={classes.form} noValidate>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        autoFocus
-                        id="standard-basic"
-                        label="User Name"
-                        type='text'
-                        variant="outlined"
-                        name='userName'
-                        placeholder='User Name'
-                        value={loginState.username}
-                        onChange={e => setLoginState({ ...loginState, username: e.target.value })}
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        name='password'
-                        placeholder='Password'
-                        value={loginState.password}
-                        onChange={e => setLoginState({ ...loginState, password: e.target.value })}
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        onClick={submitLogin}
-                    >
-                        Sign In
-                    </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                {"Don't have an account? Sign Up"}
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </form>
-            </div>
-            {isLoggedIn && <div>Loggedin</div>}
         </Container>
     )
 }

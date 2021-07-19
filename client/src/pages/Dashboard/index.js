@@ -1,19 +1,20 @@
-import Projects from '../Projects/Projects.js'
-import ProjectUsers from '../ProjectUsers/ProjectUsers.js'
-import RoleAssignment from '../RoleAssignment/RoleAssignment.js'
-import Tickets from '../Tickets/Tickets.js'
-import UserProfile from '../UserProfile/UserProfile.js'
-import Home from '../Home/Home.js'
 import TopNavbar from '../../components/TopNavbar/TopNavbar.js'
-import styles from './index.module.scss'
 import Container from '@material-ui/core/Container';
 import React, { useState } from "react";
+import Login from '../Login/Login';
 import {
     BrowserRouter as Router,
     Switch,
     Route,
+    Redirect,
+    Link
 } from "react-router-dom";
-import Login from '../../components/Login/Login.js';
+import Projects from '../../pages/Projects/Projects.js'
+import ProjectUsers from '../../pages/ProjectUsers/ProjectUsers.js'
+import RoleAssignment from '../../pages/RoleAssignment/RoleAssignment.js'
+import Tickets from '../../pages/Tickets/Tickets.js'
+import UserProfile from '../../pages/UserProfile/UserProfile.js'
+import Home from '../../pages/Home/Home.js'
 var jwt = require('jsonwebtoken');
 const axios = require('axios');
 
@@ -30,7 +31,34 @@ export default function Dashboard() {
 
     return (
         <Container>
+            <Router>
             <TopNavbar />
+                <Switch>
+                    <Route exact path="/"
+                        render={() => {
+                            return (
+                                !token && Date.now() > decoded.exp * 1000 ?
+                                <Redirect to="/" /> : <Redirect to="/Home" />
+                            )
+                        }}
+                        />
+                    <Route path="/roles">
+                        <RoleAssignment />
+                    </Route>
+                    <Route path="/users">
+                        <ProjectUsers />
+                    </Route>
+                    <Route path="/projects">
+                        <Projects />
+                    </Route>
+                    <Route path="/tickets">
+                        <Tickets />
+                    </Route>
+                    <Route path="/profile">
+                        <UserProfile />
+                    </Route>
+                </Switch>
+            </Router>
         </Container>
     )
 }
